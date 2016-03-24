@@ -1,0 +1,6 @@
+[template]
+src = "traefik.toml.tmpl"
+dest = "/etc/traefik.toml"
+keys = [
+    "/latest/containers",
+]
