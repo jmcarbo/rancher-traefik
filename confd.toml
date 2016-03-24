@@ -2,6 +2,7 @@
 src = "traefik.toml.tmpl"
 dest = "/etc/traefik.toml"
 prefix = "/latest"
+interval = 15
 keys = [
     "/containers",
     "/services",

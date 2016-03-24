@@ -7,4 +7,6 @@ RUN chmod +x /usr/local/bin/confd
 RUN bash -c 'mkdir -p /etc/confd/{conf.d,templates}'
 ADD confd.toml /etc/confd/conf.d/confd.toml
 ADD traefik.toml.tmpl /etc/confd/templates/traefik.toml.tmpl
+ADD start.sh /start.sh
+CMD "/bin/bash /start.sh"
 
