@@ -4,4 +4,5 @@ dest = "/etc/traefik.toml"
 prefix = "/latest"
 keys = [
     "/containers",
+    "/services",
 ]
