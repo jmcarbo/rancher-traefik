@@ -7,6 +7,7 @@ graceTimeOut = 10
 logLevel = "DEBUG"
 
 [file]
+watch = true
 [backends]
 {{range gets "/services/*/metadata/traefik.enable"}}
   {{$metadata := dir .Key}}
@@ -23,7 +24,7 @@ logLevel = "DEBUG"
     {{$ip_key := printf "%s/primary_ip" $server}}
     {{$ip := getv $ip_key}}
     {{$url := printf "http://%s:%s" $ip $port }}
-    [backends.{{getv $backend_name}}.servers.{{getv $server_name}}]
+    [backends.{{getv $backend_name}}.servers.{{$server_name}}]
        url = "{{$url}}"
     {{end}}
 {{end}}
