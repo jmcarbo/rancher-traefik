@@ -39,6 +39,7 @@ watch = true
   {{$value := printf "%s/traefik.frontend.value" $metadata -}}
   [frontends.{{getv $service_name}}]
     backend="{{getv $backend_name}}"
+    passHostHeader = true
     [frontends.{{getv $service_name}}.routes.rule_1]
       rule = "{{getv $rule}}"
       value = "{{getv $value}}"
