@@ -1,4 +1,3 @@
-interval = 15
 [template]
 src = "traefik.toml.tmpl"
 dest = "/etc/traefik.toml"
