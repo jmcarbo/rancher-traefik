@@ -12,5 +12,6 @@ RUN chmod +x /start.sh
 ADD dummy.crt /etc/certs/dummy.crt
 ADD dummy.key /etc/certs/dummy.key
 CMD "/start.sh"
+VOLUME "/acme"
 
 
