@@ -2,7 +2,7 @@
 defaultEntryPoints = ["http"]
 [entryPoints]
   [entryPoints.http]
-  address = "{{ getv "/self/labels/traefik.entrypoints.http.address" ":9980"}}"
+  address = "{{ getv "/self/container/labels/traefik.entrypoints.http.address" ":9980"}}"
 graceTimeOut = 10
 logLevel = "DEBUG"
 
@@ -10,39 +10,37 @@ logLevel = "DEBUG"
 watch = true
 [backends]
 {{range gets "/services/*/metadata/traefik.enable"}}
-  {{$metadata := dir .Key}}
-  {{$service_name_key := dir $metadata}}
-  {{$service_name := printf "%s/name" $service_name_key}}
-  {{$backend_name := printf "%s/traefik.backend" $metadata}}
-  {{$port_key := printf "%s/traefik.port" $metadata}}
-  {{$port := getv $port_key}}
+  {{$metadata := dir .Key -}}
+  {{$service_name_key := dir $metadata -}}
+  {{$service_name := printf "%s/name" $service_name_key -}}
+  {{$backend_name := printf "%s/traefik.backend" $metadata -}}
+  {{$port_key := printf "%s/traefik.port" $metadata -}}
+  {{$port := getv $port_key -}}
   [backends.{{getv $backend_name}}]
-  {{$containers := printf "%s/containers/*/name" $service_name_key}}
-  {{range gets $containers}}
-    {{$server_name := .Value}}
-    {{$server := dir .Key}}
-    {{$ip_key := printf "%s/primary_ip" $server}}
-    {{$ip := getv $ip_key}}
-    {{$url := printf "http://%s:%s" $ip $port }}
+  {{$containers := printf "%s/containers/*/name" $service_name_key -}}
+  {{range gets $containers -}}
+    {{$server_name := .Value -}}
+    {{$server := dir .Key -}}
+    {{$ip_key := printf "%s/primary_ip" $server -}}
+    {{$ip := getv $ip_key -}}
+    {{$url := printf "http://%s:%s" $ip $port -}}
     [backends.{{getv $backend_name}}.servers.{{$server_name}}]
        url = "{{$url}}"
-    {{end}}
+    {{end -}}
 {{end}}
 
 [frontends]
-{{range gets "/services/*/metadata/traefik.enable"}}
-  {{$metadata := dir .Key}}
-  {{$service_name_key := dir $metadata}}
-  {{$service_name := printf "%s/name" $service_name_key}}
-  {{$backend_name := printf "%s/traefik.backend" $metadata}}
-  {{$rule := printf "%s/traefik.frontend.rule" $metadata}}
-  {{$value := printf "%s/traefik.frontend.value" $metadata}}
+{{range gets "/services/*/metadata/traefik.enable" -}}
+  {{$metadata := dir .Key -}}
+  {{$service_name_key := dir $metadata -}}
+  {{$service_name := printf "%s/name" $service_name_key -}}
+  {{$backend_name := printf "%s/traefik.backend" $metadata -}}
+  {{$rule := printf "%s/traefik.frontend.rule" $metadata -}}
+  {{$value := printf "%s/traefik.frontend.value" $metadata -}}
   [frontends.{{getv $service_name}}]
     backend="{{getv $backend_name}}"
     [frontends.{{getv $service_name}}.routes.rule_1]
       rule = "{{getv $rule}}"
       value = "{{getv $value}}"
-
-  
 {{end}}
 
