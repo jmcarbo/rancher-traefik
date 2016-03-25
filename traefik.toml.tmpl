@@ -2,7 +2,7 @@
 defaultEntryPoints = ["http"]
 [entryPoints]
   [entryPoints.http]
-  address = ":9980"
+  address = "{{ getv "/self/labels/traefik.entrypoints.http.address" ":9980"}}"
 graceTimeOut = 10
 logLevel = "DEBUG"
 

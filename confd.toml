@@ -3,6 +3,7 @@ src = "traefik.toml.tmpl"
 dest = "/etc/traefik.toml"
 prefix = "/latest"
 keys = [
+    "/self",
     "/containers",
     "/services",
 ]
