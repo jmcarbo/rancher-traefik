@@ -9,6 +9,8 @@ ADD confd.toml /etc/confd/conf.d/confd.toml
 ADD traefik.toml.tmpl /etc/confd/templates/traefik.toml.tmpl
 ADD start.sh /start.sh
 RUN chmod +x /start.sh
+ADD dummy.crt /etc/certs/dummy.crt
+ADD dummy.key /etc/certs/dummy.key
 CMD "/start.sh"
 
 

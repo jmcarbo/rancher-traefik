@@ -7,6 +7,10 @@ defaultEntryPoints = ["http", "https"]
   address = "{{ getv "/self/container/labels/traefik.entrypoints.http.address" ":9980"}}"
   [entryPoints.https]
   address = "{{ getv "/self/container/labels/traefik.entrypoints.https.address" ":9443"}}"
+    [entryPoints.https.tls]
+      [[entryPoints.https.tls.certificates]]
+      CertFile = "/etc/certs/dummy.crt"
+      KeyFile = "/etc/certs/dummy.key"
 
 [acme]
 email = "test@traefik.io"
