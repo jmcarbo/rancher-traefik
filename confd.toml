@@ -7,3 +7,12 @@ keys = [
     "/containers",
     "/services",
 ]
+[template]
+src = "certificates.sh.tmpl"
+dest = "/usr/local/bin/certificates.sh"
+prefix = "/latest"
+keys = [
+    "/self",
+    "/containers",
+    "/services",
+]
