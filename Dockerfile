@@ -14,6 +14,8 @@ ADD get_certificates.sh /usr/local/bin/get_certificates.sh
 RUN chmod +x /usr/local/bin/get_certificates.sh
 ADD dummy.crt /etc/certs/dummy.crt
 ADD dummy.key /etc/certs/dummy.key
+ADD https://dl.minio.io/client/mc/release/linux-amd64/mc /usr/local/bin/mc
+RUN chmod +x /usr/local/bin/mc
 CMD "/start.sh"
 VOLUME "/acme"
 
