@@ -1,6 +1,6 @@
 [template]
-src = "traefik.toml.tmpl"
-dest = "/etc/traefik.toml"
+src = "certificates.sh.tmpl"
+dest = "/usr/local/bin/certificates.sh"
 prefix = "/latest"
 keys = [
     "/self",
