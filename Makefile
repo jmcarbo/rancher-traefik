@@ -1,2 +1,2 @@
 build:
-	docker build -t library/devranchertraefik .
+	docker build -t devranchertraefik .

@@ -9,13 +9,22 @@ defaultEntryPoints = ["http", "https"]
   [entryPoints.https]
   address = "{{ getv "/self/container/labels/traefik.entrypoints.https.address" ":9443"}}"
     [entryPoints.https.tls]
-      [[entryPoints.https.tls.certificates]]
       {{ $certificates := split (getv "/self/container/labels/traefik.certificates") "," -}}
       {{ range $certificates }}
+      [[entryPoints.https.tls.certificates]]
       CertFile = "/acme/certificates/{{.}}.crt"
       KeyFile = "/acme/certificates/{{.}}.key"
       {{end -}}
-  {{end -}}
+      {{range getvs "/services/*/metadata/traefik.certificates" -}}
+      {{ $certificates := split . "," -}}
+      {{ range $certificates }}
+      [[entryPoints.https.tls.certificates]]
+      CertFile = "/acme/certificates/{{.}}.crt"
+      KeyFile = "/acme/certificates/{{.}}.key"
+      {{end -}}
+      {{end -}}
+	
+  {{end}}
 
 #[acme]
 #email = "test@traefik.io"
