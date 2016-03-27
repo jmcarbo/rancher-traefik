@@ -7,4 +7,4 @@ keys = [
     "/containers",
     "/services",
 ]
-check_cmd = "/usr/local/bin/get_certificates.sh"
+#check_cmd = "/usr/local/bin/get_certificates.sh"
