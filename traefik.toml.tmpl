@@ -53,7 +53,7 @@ watch = true
   {{$external_ips := printf "%s/external_ips/*" $service_name_key -}}
   {{range $index, $external_ip := gets $external_ips -}}
     {{$server_name := $index -}}
-    {{$url := printf "http://%s:%s" $external_ip $port -}}
+    {{$url := printf "http://%s:%s" $external_ip.Value $port -}}
     [backends.{{getv $backend_name}}.servers.{{$server_name}}]
        url = "{{$url}}"
   {{end -}}
