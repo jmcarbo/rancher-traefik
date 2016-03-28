@@ -84,10 +84,10 @@ watch = true
   {{$value := printf "%s/traefik.frontend.value" $metadata -}}
   {{ $routes := split (getv $value) "," -}}
   {{ range $index, $element := $routes -}}
-  [frontends.{{getv $service_name}}]
+  [frontends.{{getv $service_name}}_{{$index}}]
     backend="{{getv $backend_name}}"
     passHostHeader = true
-    [frontends.{{getv $service_name}}.routes.{{$index}}]
+    [frontends.{{getv $service_name}}_{{$index}}.routes.{{$index}}]
       rule = "{{getv $rule}}"
       value = "{{$element}}"
   {{end -}}
