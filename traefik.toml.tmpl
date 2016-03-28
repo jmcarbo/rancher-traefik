@@ -38,10 +38,10 @@ watch = true
   {{$service_name := printf "%s/name" $service_name_key -}}
   {{$backend_name := printf "%s/traefik.backend" $metadata -}}
   {{$has_sidekicks := printf "%s/traefik.has_sidekicks" $metadata -}}
-  {{$sidekicks := printf "%s/sidekicks" $service_name_key -}}
+  {{$sidekicks := printf "%s/sidekicks/*" $service_name_key -}}
   {{$port_key := printf "%s/traefik.port" $metadata -}}
   {{$port := getv $port_key -}}
-  {{ if or (and (exists $has_sidekicks) (gt len (gets $sidekicks) 0)) (not exists $has_sidekicks)  -}}
+  {{if or (and (exists $has_sidekicks) (gt (len (gets $sidekicks)) 0)) (not (exists $has_sidekicks)) -}}
   [backends.{{getv $backend_name}}]
   {{$containers := printf "%s/containers/*/name" $service_name_key -}}
   {{range gets $containers -}}
@@ -69,16 +69,20 @@ watch = true
   {{$service_name_key := dir $metadata -}}
   {{$service_name := printf "%s/name" $service_name_key -}}
   {{$backend_name := printf "%s/traefik.backend" $metadata -}}
+  {{$has_sidekicks := printf "%s/traefik.has_sidekicks" $metadata -}}
+  {{$sidekicks := printf "%s/sidekicks/*" $service_name_key -}}
   {{$rule := printf "%s/traefik.frontend.rule" $metadata -}}
   {{$value := printf "%s/traefik.frontend.value" $metadata -}}
   {{ $routes := split (getv $value) "," -}}
   {{ range $index, $element := $routes -}}
+  {{if or (and (exists $has_sidekicks) (gt (len (gets $sidekicks)) 0)) (not (exists $has_sidekicks)) -}}
   [frontends.{{getv $service_name}}_{{$index}}]
     backend="{{getv $backend_name}}"
     passHostHeader = true
     [frontends.{{getv $service_name}}_{{$index}}.routes.{{$index}}]
       rule = "{{getv $rule}}"
       value = "{{$element}}"
+  {{end -}}
   {{end -}}
 {{end}}
 
