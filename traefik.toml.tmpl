@@ -37,8 +37,11 @@ watch = true
   {{$service_name_key := dir $metadata -}}
   {{$service_name := printf "%s/name" $service_name_key -}}
   {{$backend_name := printf "%s/traefik.backend" $metadata -}}
+  {{$has_sidekicks := printf "%s/traefik.has_sidekicks" $metadata -}}
+  {{$sidekicks := printf "%s/sidekicks" $service_name_key -}}
   {{$port_key := printf "%s/traefik.port" $metadata -}}
   {{$port := getv $port_key -}}
+  {{ if or (and (exists $has_sidekicks) (gt len (gets $sidekicks) 0)) (not exists $has_sidekicks)  -}}
   [backends.{{getv $backend_name}}]
   {{$containers := printf "%s/containers/*/name" $service_name_key -}}
   {{range gets $containers -}}
@@ -56,6 +59,7 @@ watch = true
     {{$url := printf "http://%s:%s" $external_ip.Value $port -}}
     [backends.{{getv $backend_name}}.servers.{{$server_name}}]
        url = "{{$url}}"
+  {{end -}}
   {{end -}}
 {{end}}
 
