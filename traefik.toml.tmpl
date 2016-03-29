@@ -1,7 +1,11 @@
 graceTimeOut = 10
 logLevel = "DEBUG"
 # traefik.toml
+{{if and (exists "/self/container/labels/traefik.entrypoints.https.address") (or (exists "/self/container/labels/traefik.certificates") (gt (len ( getvs "/services/*/metadata/traefik.certificates"))  0 )) -}}
 defaultEntryPoints = ["http", "https"]
+{{else -}}
+defaultEntryPoints = ["http"]
+{{end -}}
 [entryPoints]
   [entryPoints.http]
   address = "{{ getv "/self/container/labels/traefik.entrypoints.http.address" ":9980"}}"
