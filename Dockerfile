@@ -9,6 +9,8 @@ ADD confd.toml /etc/confd/conf.d/confd.toml
 ADD traefik.toml.tmpl /etc/confd/templates/traefik.toml.tmpl
 ADD start.sh /start.sh
 RUN chmod +x /start.sh
+ADD gosuv /usr/local/bin/gosuv
+RUN chmod +x /usr/local/bin/gosuv
 CMD "/start.sh"
 
 
