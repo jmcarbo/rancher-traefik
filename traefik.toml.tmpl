@@ -81,14 +81,16 @@ watch = true
   {{$rule := printf "%s/traefik.frontend.rule" $metadata -}}
   {{$value := printf "%s/traefik.frontend.value" $metadata -}}
   {{ $routes := split (getv $value) "," -}}
-  {{ range $index, $element := $routes -}}
   {{if or (and (exists $has_sidekicks) (gt (len (gets $sidekicks)) 0)) (not (exists $has_sidekicks)) -}}
+  {{ range $index, $element := $routes -}}
   [frontends.{{getv $service_name}}_{{$index}}]
     backend="{{getv $backend_name (getv $service_name)}}"
     passHostHeader = true
     [frontends.{{getv $service_name}}_{{$index}}.routes.{{$index}}]
       rule = "{{getv $rule}}"
       value = "{{$element}}"
+  {{end -}}
+  {{if eq (len $routes) 0 -}}
   {{end -}}
   {{end -}}
 {{end}}
