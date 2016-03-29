@@ -40,11 +40,10 @@ watch = true
   {{$has_sidekicks := printf "%s/traefik.has_sidekicks" $metadata -}}
   {{$sidekicks := printf "%s/sidekicks/*" $service_name_key -}}
   {{$port_key := printf "%s/traefik.port" $metadata -}}
+  {{ $default_port := "80" }}
   {{if exists "/self/service/ports/0" -}}
     {{$default_port_a:= getv "/self/service/ports/0" -}}
     {{$default_port:= (index $default_port_a 1) -}}
-  {{else -}}
-    {{$default_port:="80"}}
   {{end -}}
 
   {{$port := getv $port_key $default_port -}}
