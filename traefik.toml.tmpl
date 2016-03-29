@@ -5,7 +5,7 @@ defaultEntryPoints = ["http", "https"]
 [entryPoints]
   [entryPoints.http]
   address = "{{ getv "/self/container/labels/traefik.entrypoints.http.address" ":9980"}}"
-  {{if and (exists "/self/container/labels/traefik.entrypoints.https.address") (or (exists "/self/container/labels/traefik.certificates") (len ( getvs "/services/*/metadata/traefik.certificates") gt 0 )) -}}
+  {{if and (exists "/self/container/labels/traefik.entrypoints.https.address") (or (exists "/self/container/labels/traefik.certificates") (gt (len ( getvs "/services/*/metadata/traefik.certificates"))  0 )) -}}
   [entryPoints.https]
   address = "{{ getv "/self/container/labels/traefik.entrypoints.https.address" ":9443"}}"
     [entryPoints.https.tls]
