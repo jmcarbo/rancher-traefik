@@ -87,7 +87,7 @@ watch = true
     backend="{{getv $backend_name (getv $service_name)}}"
     passHostHeader = true
     [frontends.{{getv $service_name}}_{{$index}}.routes.{{$index}}]
-      rule = "{{getv $rule}}"
+      rule = "{{getv $rule "Host"}}"
       value = "{{$element}}"
   {{end -}}
   {{if eq (len $routes) 0 -}}
