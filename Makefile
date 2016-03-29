@@ -1,2 +1,2 @@
 build:
-	docker build -t rancher-traefik .
+	docker build -t devranchertraefik .

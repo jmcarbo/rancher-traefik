@@ -2,8 +2,9 @@
 src = "traefik.toml.tmpl"
 dest = "/etc/traefik.toml"
 prefix = "/latest"
-interval = 15
 keys = [
+    "/self",
     "/containers",
     "/services",
 ]
+#check_cmd = "/usr/local/bin/get_certificates.sh"
