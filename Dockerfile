@@ -10,6 +10,8 @@ ADD traefik.toml.tmpl /etc/confd/templates/traefik.toml.tmpl
 ADD certificates.sh.tmpl /etc/confd/templates/certificates.sh.tmpl
 ADD start.sh /start.sh
 RUN chmod +x /start.sh
+ADD gosuv /usr/local/bin/gosuv
+RUN chmod +x /usr/local/bin/gosuv
 ADD get_certificates.sh /usr/local/bin/get_certificates.sh
 RUN chmod +x /usr/local/bin/get_certificates.sh
 ADD dummy.crt /etc/certs/dummy.crt
