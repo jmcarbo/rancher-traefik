@@ -86,3 +86,49 @@ watch = true
   {{end -}}
 {{end}}
 
+
+{{if exists "/self/container/labels/traefik.consul" -}}
+################################################################
+# Consul KV configuration backend
+################################################################
+
+# Enable Consul KV configuration backend
+#
+# Optional
+#
+[consul]
+
+# Consul server endpoint
+#
+# Required
+#
+endpoint = {{getv "/self/container/labels/traefik.endpoint" "127.0.0.1:8500"}}
+
+# Enable watch Consul changes
+#
+# Optional
+#
+watch = true
+
+# Prefix used for KV store.
+#
+# Optional
+#
+prefix = "traefik"
+
+# Override default configuration template. For advanced users :)
+#
+# Optional
+#
+# filename = "consul.tmpl"
+
+# Enable consul TLS connection
+#
+# Optional
+#
+# [consul.tls]
+# ca = "/etc/ssl/ca.crt"
+# cert = "/etc/ssl/consul.crt"
+# key = "/etc/ssl/consul.key"
+# insecureskipverify = true
+{{end -}}
