@@ -158,7 +158,7 @@ watch = true
   {{end -}}
 {{end}}
 
-{{if exists "/self/container/labels/traefik.consul" -}}
+{{if (ne (getenv "CONSUL_URL") "") -}}
 ################################################################
 # Consul KV configuration backend
 ################################################################
@@ -173,7 +173,7 @@ watch = true
 #
 # Required
 #
-endpoint = {{getv "/self/container/labels/traefik.endpoint" "127.0.0.1:8500"}}
+endpoint = {{getenv "CONSUL_URL"}}
 
 # Enable watch Consul changes
 #

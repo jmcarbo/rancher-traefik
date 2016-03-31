@@ -1,3 +1,4 @@
 credentials.env
 testsidekick
 testsidekick/*
+docker-compose.yml
